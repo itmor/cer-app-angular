@@ -23,7 +23,7 @@ export class DropComponent {
     console.log(event.dataTransfer.files[0]);
 
     this.decoderService.read(event.dataTransfer.files[0], (data: any) => {
-      console.log(data.sub[0]);
+      console.log(data);
     });
 
     this.localStorageService.addItem({

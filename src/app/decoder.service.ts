@@ -7,7 +7,7 @@ declare const window: any;
 export class DecoderService {
   private reHex: RegExp = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/;
 
-  decode(der: any, callBack: Function): void {
+  public decode(der: any, callBack: Function): void {
     try {
       const asn1: any = window.ASN1.decode(der);
       if (asn1.typeName() !== 'SEQUENCE') {
@@ -15,14 +15,25 @@ export class DecoderService {
           'Неверная структура конверта сертификата (ожидается SEQUENCE)';
         throw new Error(errorText);
       } else {
-        callBack(asn1);
+        callBack(asn1.sub[0]);
+        window.sub = asn1;
+        this.genString(asn1.sub[0]);
       }
     } catch (e) {
       throw new Error(e);
     }
   }
 
-  decodeBinaryString(str: any, callBack: Function) {
+  private genString(dataObj: any) {
+    if (typeof dataObj.sub !== null) {
+      for (let i = 0; i < dataObj.sub.length; i++) {
+        this.genString(dataObj.sub[i]);
+        console.log(dataObj.sub[i]);
+      }
+    }
+  }
+
+  public decodeBinaryString(str: any, callBack: Function) {
     let der: any;
 
     try {
@@ -39,7 +50,7 @@ export class DecoderService {
     }
   }
 
-  read(file: Blob, callBack: Function): void {
+  public read(file: Blob, callBack: Function): void {
     const reader: FileReader = new FileReader();
     reader.onloadend = () => {
       if (reader.error) {
