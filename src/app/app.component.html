@@ -1,14 +1,18 @@
 <div class="wrap">
   <div class="block">
     <div class="left">
-      <list [listActive]="listActive"></list>
+      <list
+        *ngIf="listShow"
+        [listActive]="listActive"
+        [storageData]="storageData"
+      ></list>
       <button
         class="btn-add"
         (click)="addButtonHandler()"
-        [ngClass]="statusButton ? 'active' : 'not-active'"
+        [ngClass]="addButtonActive ? 'active' : 'not-active'"
       >
-        <span *ngIf="!statusButton">Добавить</span>
-        <span *ngIf="statusButton">Отменить</span>
+        <span *ngIf="!addButtonActive">Добавить</span>
+        <span *ngIf="addButtonActive">Отменить</span>
       </button>
     </div>
     <div class="right">

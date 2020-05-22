@@ -1,1 +1,8 @@
-<div class="drop">Перетащите файл сертификата в это поле</div>
+<div
+  draggable="true"
+  class="drop"
+  (dragover)="onDrag($event)"
+  (drop)="onDrop($event)"
+>
+  Перетащите файл сертификата в это поле
+</div>

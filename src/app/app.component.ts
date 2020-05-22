@@ -8,21 +8,21 @@ import { StorageData } from './interfaces/storageData.interface';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  public listShow: boolean = true;
   public listActive: boolean = true;
   public cerContent = '';
   public viewShow: boolean = true;
   public dropShow: boolean = false;
 
-  protected localStorageService: LocalStorageService;
   public storageData: Array<StorageData>;
 
-  public statusButton: boolean = false;
+  public addButtonActive: boolean = false;
 
-  constructor() {
-    this.localStorageService = new LocalStorageService();
-
+  constructor(private localStorageService: LocalStorageService) {
     this.storageData = this.localStorageService.getData();
-    this.localStorageService.subscribeToUpdates(this.storageUpdateHandler);
+    this.localStorageService.subscribeToUpdates(
+      this.storageUpdateHandler.bind(this)
+    );
   }
 
   private storageUpdateHandler(updatedData: Array<StorageData>) {
@@ -30,11 +30,20 @@ export class AppComponent {
   }
 
   public addButtonHandler(): void {
-    this.statusButton = !this.statusButton;
-    this.dropShow = !this.dropShow;
-    this.viewShow = !this.viewShow;
-    this.listActive = !this.listActive;
+    if (!this.localStorageService.isEmpty()) {
+      this.addButtonActive = !this.addButtonActive;
+      this.dropShow = !this.dropShow;
+      this.viewShow = !this.viewShow;
+      this.listActive = !this.listActive;
+    }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.localStorageService.isEmpty()) {
+      this.listShow = false;
+      this.dropShow = true;
+      this.viewShow = false;
+      this.addButtonActive = true;
+    }
+  }
 }
