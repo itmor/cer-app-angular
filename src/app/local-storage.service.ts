@@ -20,7 +20,6 @@ export class LocalStorageService {
     if (localStorage[this.storageName] === '[]') {
       return true;
     }
-
     return false;
   }
 
