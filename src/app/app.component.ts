@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
+import { StorageData } from './interfaces/storageData.interface';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,21 @@ export class AppComponent {
   public viewShow: boolean = true;
   public dropShow: boolean = false;
 
+  protected localStorageService: LocalStorageService;
+  public storageData: Array<StorageData>;
+
   public statusButton: boolean = false;
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor() {
+    this.localStorageService = new LocalStorageService();
+
+    this.storageData = this.localStorageService.getData();
+    this.localStorageService.subscribeToUpdates(this.storageUpdateHandler);
+  }
+
+  private storageUpdateHandler(updatedData: Array<StorageData>) {
+    this.storageData = updatedData;
+  }
 
   public addButtonHandler(): void {
     this.statusButton = !this.statusButton;

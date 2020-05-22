@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
-
-interface StorageData {
-  id: string;
-  name: string;
-  content: string;
-}
+import { StorageData } from './interfaces/storageData.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
   private storageName: string = 'cerAngApp';
+  private callbacksUpdates: Array<Function> = [];
 
-  constructor() {
+  public constructor() {
     this.create();
   }
 
@@ -36,11 +32,13 @@ export class LocalStorageService {
     }
   }
 
-  getItem(id: string): any {
+  public getItem(id: string): any {
     const localStorageString: string = localStorage[this.storageName];
-    const result: Array<StorageData> = JSON.parse(localStorageString);
+    const localStorageObject: Array<StorageData> = JSON.parse(
+      localStorageString
+    );
 
-    for (const item of result) {
+    for (const item of localStorageObject) {
       if (item.id === id) {
         return item;
       }
@@ -48,7 +46,21 @@ export class LocalStorageService {
     return 'not-found';
   }
 
-  addItem(data: StorageData) {
+  public subscribeToUpdates(callback: Function): void {
+    this.callbacksUpdates.push(callback);
+  }
+
+  public unsubscribeToUpdates(callback: Function): void {
+    if (this.callbacksUpdates.length > 0) {
+      for (let i = 0; i < this.callbacksUpdates.length; i++) {
+        if (this.callbacksUpdates[i] === callback) {
+          this.callbacksUpdates = this.callbacksUpdates.slice(i + 1);
+        }
+      }
+    }
+  }
+
+  public addItem(data: StorageData): void {
     const localStorageArray: Array<object> = JSON.parse(
       localStorage[this.storageName]
     );
@@ -56,5 +68,20 @@ export class LocalStorageService {
 
     const localStorageString: string = JSON.stringify(localStorageArray);
     localStorage[this.storageName] = localStorageString;
+
+    if (this.callbacksUpdates.length > 0) {
+      for (let callback of this.callbacksUpdates) {
+        callback(this.getData());
+      }
+    }
+  }
+
+  public getData(): Array<StorageData> {
+    const localStorageString: string = localStorage[this.storageName];
+    const localStorageObject: Array<StorageData> = JSON.parse(
+      localStorageString
+    );
+
+    return localStorageObject;
   }
 }
