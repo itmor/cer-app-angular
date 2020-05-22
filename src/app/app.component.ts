@@ -38,6 +38,11 @@ export class AppComponent {
     }
   }
 
+  public onDrop(): void {
+    this.listShow = true;
+    this.listActive = false;
+  }
+
   ngOnInit() {
     if (this.localStorageService.isEmpty()) {
       this.listShow = false;

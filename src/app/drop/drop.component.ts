@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { LocalStorageService } from '../local-storage.service';
 
 @Component({
@@ -7,19 +7,24 @@ import { LocalStorageService } from '../local-storage.service';
   styleUrls: ['./drop.component.scss'],
 })
 export class DropComponent {
+  @Output() onDrop = new EventEmitter<boolean>();
+
   constructor(private localStorageService: LocalStorageService) {}
 
-  public onDrag(event: DragEvent): void {
+  public dragHandler(event: DragEvent): void {
     event.preventDefault();
   }
 
-  public onDrop(event: DragEvent): void {
+  public dropHandler(event: DragEvent): void {
     console.log(event.dataTransfer.files[0]);
     this.localStorageService.addItem({
       name: 'hahahahh lol',
       id: 'random',
       content: 'hi',
     });
+
+    this.onDrop.emit();
+
     event.preventDefault();
   }
 }

@@ -16,7 +16,7 @@
       </button>
     </div>
     <div class="right">
-      <drop *ngIf="dropShow"></drop>
+      <drop *ngIf="dropShow" (onDrop)="onDrop()"></drop>
       <view *ngIf="viewShow" [cerContent]="cerContent"></view>
     </div>
   </div>
