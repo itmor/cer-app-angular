@@ -8,22 +8,13 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class AppComponent {
   public listActive: boolean = true;
+  public cerContent = '';
 
   public addButtonText: string = 'Добавить';
   public addButtonTextArray: string[] = ['Добавить', 'Отменить'];
   public statusButton: boolean = false;
 
-  constructor(private localStorageService: LocalStorageService) {
-    this.localStorageService.addItem({
-      name: 'Test',
-      id: '12dsds',
-      content: 'sdad sdas',
-    });
-
-    if (this.localStorageService.isEmpty()) {
-      console.log('empty');
-    }
-  }
+  constructor(private localStorageService: LocalStorageService) {}
 
   public addButtonHandler(): void {
     this.statusButton = !this.statusButton;
