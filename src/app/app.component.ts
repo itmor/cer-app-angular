@@ -20,7 +20,9 @@ export class AppComponent {
       content: 'sdad sdas',
     });
 
-    const localItem: object = this.localStorageService.getItem('12dsds');
+    if (this.localStorageService.isEmpty()) {
+      console.log('empty');
+    }
   }
 
   public addButtonHandler(): void {

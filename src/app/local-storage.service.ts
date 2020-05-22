@@ -16,6 +16,14 @@ export class LocalStorageService {
     this.create();
   }
 
+  public isEmpty(): boolean {
+    if (localStorage[this.storageName] === '[]') {
+      return true;
+    }
+
+    return false;
+  }
+
   private isExist(): boolean {
     if (localStorage[this.storageName] !== undefined) {
       return true;
