@@ -9,6 +9,8 @@ import { LocalStorageService } from './local-storage.service';
 export class AppComponent {
   public listActive: boolean = true;
   public cerContent = '';
+  public viewShow: boolean = true;
+  public dropShow: boolean = false;
 
   public statusButton: boolean = false;
 
@@ -16,6 +18,9 @@ export class AppComponent {
 
   public addButtonHandler(): void {
     this.statusButton = !this.statusButton;
+    this.dropShow = !this.dropShow;
+    this.viewShow = !this.viewShow;
+    this.listActive = !this.listActive;
   }
 
   ngOnInit() {}
