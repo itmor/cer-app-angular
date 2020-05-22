@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-drop',
+  selector: 'drop',
   templateUrl: './drop.component.html',
-  styleUrls: ['./drop.component.scss']
+  styleUrls: ['./drop.component.scss'],
 })
 export class DropComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
