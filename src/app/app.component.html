@@ -3,6 +3,7 @@
     <div class="left">
       <list
         *ngIf="listShow"
+        (onSelectItem)="onSelectItem($event)"
         [listActive]="listActive"
         [storageData]="storageData"
         [resetSelectedItems]="resetSelectedItems"

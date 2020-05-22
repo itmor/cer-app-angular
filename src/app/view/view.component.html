@@ -1,4 +1,4 @@
-<div class="view">
+<div class="view" [class.filled]="cerContent !== ''">
   <p *ngIf="cerContent === ''">Выберите сертификат для просмотра информации</p>
   <p *ngIf="cerContent !== ''">{{ cerContent }}</p>
 </div>

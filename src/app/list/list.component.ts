@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { StorageData } from '../interfaces/storageData.interface';
 
 @Component({
@@ -10,11 +10,14 @@ export class ListComponent {
   @Input() listActive: boolean;
   @Input() storageData: Array<StorageData>;
   @Input() resetSelectedItems: boolean;
-  private selectedItemData: StorageData;
+  @Output() onSelectItem = new EventEmitter<any>();
+
+  public selectedItemData: StorageData;
 
   public clickHandler(itemData: StorageData): void {
     if (this.listActive === true) {
       this.selectedItemData = itemData;
+      this.onSelectItem.emit(this.selectedItemData);
       this.resetSelectedItems = false;
     }
   }

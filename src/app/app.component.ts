@@ -34,12 +34,8 @@ export class AppComponent {
       this.dropShow = !this.dropShow;
       this.viewShow = !this.viewShow;
       this.listActive = !this.listActive;
-
-      /* 
-      HARDCODE
-      That was done since when changing @Output in a child,
-      @Output stops receiving changes
-      */
+      this.cerContent = '';
+      //That was done since when changing @Output in a child, @Output stops receiving changes
       this.resetSelectedItems = Object.assign(false, this.resetSelectedItems);
     }
   }
@@ -47,6 +43,10 @@ export class AppComponent {
   public onDrop(): void {
     this.listShow = true;
     this.listActive = false;
+  }
+
+  public onSelectItem(item: StorageData) {
+    this.cerContent = item.content;
   }
 
   ngOnInit() {
