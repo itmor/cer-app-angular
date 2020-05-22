@@ -1,6 +1,12 @@
 <div [ngClass]="{ cerList: true, active: listActive }">
-  <div class="item" *ngFor="let item of storageData">
-    <span class="text">{{ item.name }}</span>
+  <div
+    class="item"
+    *ngFor="let itemData of storageData"
+    [id]="itemData.id"
+    (click)="clickHandler(itemData)"
+    [class.active]="activeHandler(itemData)"
+  >
+    <span class="text">{{ itemData.name }}</span>
     <span class="icon">▶</span>
   </div>
 </div>

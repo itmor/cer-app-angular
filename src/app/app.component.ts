@@ -13,10 +13,9 @@ export class AppComponent {
   public cerContent = '';
   public viewShow: boolean = true;
   public dropShow: boolean = false;
-
   public storageData: Array<StorageData>;
-
   public addButtonActive: boolean = false;
+  public resetSelectedItems = false;
 
   constructor(private localStorageService: LocalStorageService) {
     this.storageData = this.localStorageService.getData();
@@ -35,6 +34,13 @@ export class AppComponent {
       this.dropShow = !this.dropShow;
       this.viewShow = !this.viewShow;
       this.listActive = !this.listActive;
+
+      /* 
+      HARDCODE
+      That was done since when changing @Output in a child,
+      @Output stops receiving changes
+      */
+      this.resetSelectedItems = Object.assign(false, this.resetSelectedItems);
     }
   }
 

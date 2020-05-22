@@ -6,13 +6,27 @@ import { StorageData } from '../interfaces/storageData.interface';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
   @Input() listActive: boolean;
   @Input() storageData: Array<StorageData>;
+  @Input() resetSelectedItems: boolean;
+  private selectedItemData: StorageData;
 
-  ngOnInit(): void {}
+  public clickHandler(itemData: StorageData): void {
+    if (this.listActive === true) {
+      this.selectedItemData = itemData;
+      this.resetSelectedItems = false;
+    }
+  }
 
-  private onSelectItem(item: any): void {
-    console.log(item);
+  public activeHandler(itemData: StorageData) {
+    if (
+      this.listActive === true &&
+      itemData === this.selectedItemData &&
+      this.resetSelectedItems === false
+    ) {
+      return true;
+    }
+    return false;
   }
 }

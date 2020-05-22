@@ -18,9 +18,9 @@ export class DropComponent {
   public dropHandler(event: DragEvent): void {
     console.log(event.dataTransfer.files[0]);
     this.localStorageService.addItem({
-      name: 'hahahahh lol',
-      id: 'random',
-      content: 'hi',
+      name: 'we lol',
+      id: 'ere',
+      content: '1212',
     });
 
     this.onDrop.emit();
