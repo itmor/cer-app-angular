@@ -10,21 +10,12 @@ export class AppComponent {
   public listActive: boolean = true;
   public cerContent = '';
 
-  public addButtonText: string = 'Добавить';
-  public addButtonTextArray: string[] = ['Добавить', 'Отменить'];
   public statusButton: boolean = false;
 
   constructor(private localStorageService: LocalStorageService) {}
 
   public addButtonHandler(): void {
     this.statusButton = !this.statusButton;
-
-    // set text button
-    if (this.addButtonText === this.addButtonTextArray[0]) {
-      this.addButtonText = this.addButtonTextArray[1];
-    } else {
-      this.addButtonText = this.addButtonTextArray[0];
-    }
   }
 
   ngOnInit() {}
