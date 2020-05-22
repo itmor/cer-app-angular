@@ -1,0 +1,46 @@
+.cerList {
+  border: 1px solid black;
+  margin-bottom: 40px;
+
+  .item {
+    display: flex;
+    border-bottom: 1px solid black;
+    padding: 7px;
+    align-items: center;
+
+    .text {
+      font: 400 0.875rem Helvetica, Arial, sans-serif;
+    }
+
+    .icon {
+      visibility: hidden;
+      display: flex;
+      margin: 0 0 0 auto;
+      padding-left: 30px;
+      font-size: 0.8rem;
+      color: #444444;
+    }
+
+    &:last-child {
+      border: none;
+    }
+  }
+
+  .item.active {
+    background-color: #e6e6e6;
+
+    .icon {
+      visibility: visible;
+    }
+  }
+
+  .item.not-active {
+    visibility: visible;
+  }
+}
+
+.cerList.active {
+  .item {
+    cursor: pointer;
+  }
+}

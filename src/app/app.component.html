@@ -1,0 +1,15 @@
+<div class="wrap">
+  <div class="block">
+    <div class="left">
+      <list [listActive]="listActive"></list>
+      <button
+        class="btn-add"
+        (click)="addButtonHandler()"
+        [ngClass]="statusButton ? 'active' : 'not-active'"
+      >
+        {{ addButtonText }}
+      </button>
+    </div>
+    <div class="right"></div>
+  </div>
+</div>
