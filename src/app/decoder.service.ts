@@ -5,61 +5,74 @@ declare const window: any;
   providedIn: 'root',
 })
 export class DecoderService {
-  private reHex: RegExp = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/;
+  public errMessage: string = '';
 
-  public decode(der: any, callBack: Function): void {
-    try {
-      const asn1: any = window.ASN1.decode(der);
-      if (asn1.typeName() !== 'SEQUENCE') {
-        const errorText =
-          'Неверная структура конверта сертификата (ожидается SEQUENCE)';
-        throw new Error(errorText);
-      } else {
-        callBack(asn1.sub[0]);
-        window.sub = asn1;
-        this.genString(asn1.sub[0]);
-      }
-    } catch (e) {
-      throw new Error(e);
-    }
+  public decode(file: Blob, callback: Function): void {
+    window.asnDecoder(
+      file,
+      (textResult: string) => this.parseFields(textResult, callback),
+      (err: string) => this.setErorMessage(err)
+    );
   }
 
-  private genString(dataObj: any) {
-    if (typeof dataObj.sub !== null) {
-      for (let i = 0; i < dataObj.sub.length; i++) {
-        this.genString(dataObj.sub[i]);
-        console.log(dataObj.sub[i]);
-      }
-    }
+  private parseFields(text: string, callback: Function): void {
+    let cerText: string = text;
+    /* 
+      Find and cut fields from the general text, 
+      since the order is taken into account
+     */
+    const organizationCommonName = cerText.match(
+      /commonName(?:.|\n)*?\UTF8String\s+(.*?)\s+\s+/
+    )[1];
+    cerText = cerText.replace(
+      /commonName(?:.|\n)*?\UTF8String\s+(.*?)\s+\s+/,
+      ''
+    );
+
+    const subjectCommonName = cerText.match(
+      /commonName(?:.|\n)*?\UTF8String\s+(.*?)\s+\s+/
+    )[1];
+
+    const validFrom = cerText.match(/UTCTime\s(.*?)(.*?)\s/)[2];
+    cerText = cerText.replace(/UTCTime\s(.*?)(.*?)\s/, '');
+
+    const validTill = cerText.match(/UTCTime\s(.*?)(.*?)\s/)[2];
+
+    // Return StorageData object
+    callback({
+      id: Math.random().toString(36).substr(2, 5),
+      name: this.removeQuotes(subjectCommonName),
+      content: `Common Name: ${this.removeQuotes(subjectCommonName)}
+      Issuer CN: ${this.removeQuotes(organizationCommonName)}
+      Valid from: ${this.dateConvert(validFrom)}
+      Valid till: ${this.dateConvert(validTill)}`,
+    });
   }
 
-  public decodeBinaryString(str: any, callBack: Function) {
-    let der: any;
-
-    try {
-      if (this.reHex.test(str)) {
-        der = window.Hex.decode(str);
-      } else if (window.Base64.re.test(str)) {
-        der = window.Base64.unarmor(str);
-      } else {
-        der = str;
-        this.decode(der, callBack);
-      }
-    } catch (e) {
-      throw new Error(e);
-    }
+  private removeQuotes(text: string): string {
+    return text.replace(/'/g, '');
   }
 
-  public read(file: Blob, callBack: Function): void {
-    const reader: FileReader = new FileReader();
-    reader.onloadend = () => {
-      if (reader.error) {
-        throw new Error('Error reading');
-      } else {
-        this.decodeBinaryString(reader.result, callBack);
-      }
-    };
+  private dateConvert(dateString: string): string {
+    /* 
+    Incoming parameters: 170427121437Z
+    Returns: 2017-04-27
+    */
+    let date = dateString.replace(/'/g, '');
+    const year = '20' + date.match(/[0-9][0-9]/);
+    date = date.replace(/[0-9][0-9]/, '');
 
-    reader.readAsBinaryString(file);
+    const month = date.match(/[0-9][0-9]/);
+    date = date.replace(/[0-9][0-9]/, '');
+
+    const day = date.match(/[0-9][0-9]/);
+
+    return `${year}-${month}-${day}`;
+  }
+
+  private setErorMessage(err: string) {
+    this.errMessage += err;
+    console.log(this.errMessage);
+    // throw new Error('Бля');
   }
 }

@@ -25,14 +25,7 @@
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
-            "scripts": [
-              "src/lib/asn1.js",
-              "src/lib/base64.js",
-              "src/lib/dom.js",
-              "src/lib/hex.js",
-              "src/lib/int10.js",
-              "src/lib/oids.js"
-            ]
+            "scripts": ["src/lib/asn1-dec.min.js"]
           },
           "configurations": {
             "production": {

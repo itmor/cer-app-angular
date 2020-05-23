@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { LocalStorageService } from '../local-storage.service';
 import { DecoderService } from '../decoder.service';
+import { StorageData } from '../interfaces/storageData.interface';
 
 @Component({
   selector: 'drop',
@@ -20,17 +21,17 @@ export class DropComponent {
   }
 
   public dropHandler(event: DragEvent): void {
-    console.log(event.dataTransfer.files[0]);
+    this.decoderService.decode(
+      event.dataTransfer.files[0],
 
-    this.decoderService.read(event.dataTransfer.files[0], (data: any) => {
-      console.log(data);
-    });
-
-    this.localStorageService.addItem({
-      name: 'we lol',
-      id: 'ere',
-      content: '1212',
-    });
+      (storageData: StorageData) => {
+        this.localStorageService.addItem({
+          name: storageData.name,
+          id: storageData.id,
+          content: storageData.content,
+        });
+      }
+    );
 
     this.onDrop.emit();
 
