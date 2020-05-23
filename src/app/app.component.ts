@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
+import { StorageData } from './interfaces/storageData.interface';
 
 @Component({
   selector: 'app-root',
@@ -7,32 +8,53 @@ import { LocalStorageService } from './local-storage.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  public listShow: boolean = true;
   public listActive: boolean = true;
-
-  public addButtonText: string = 'Добавить';
-  public addButtonTextArray: string[] = ['Добавить', 'Отменить'];
-  public statusButton: boolean = false;
+  public cerContent = '';
+  public viewShow: boolean = true;
+  public dropShow: boolean = false;
+  public storageData: Array<StorageData>;
+  public addButtonActive: boolean = false;
+  public resetSelectedItems = false;
 
   constructor(private localStorageService: LocalStorageService) {
-    this.localStorageService.addItem({
-      name: 'Test',
-      id: '12dsds',
-      content: 'sdad sdas',
-    });
+    this.storageData = this.localStorageService.getData();
+    this.localStorageService.subscribeToUpdates(
+      this.storageUpdateHandler.bind(this)
+    );
+  }
 
-    const localItem: object = this.localStorageService.getItem('12dsds');
+  private storageUpdateHandler(updatedData: Array<StorageData>) {
+    this.storageData = updatedData;
   }
 
   public addButtonHandler(): void {
-    this.statusButton = !this.statusButton;
-
-    // set text button
-    if (this.addButtonText === this.addButtonTextArray[0]) {
-      this.addButtonText = this.addButtonTextArray[1];
-    } else {
-      this.addButtonText = this.addButtonTextArray[0];
+    if (!this.localStorageService.isEmpty()) {
+      this.addButtonActive = !this.addButtonActive;
+      this.dropShow = !this.dropShow;
+      this.viewShow = !this.viewShow;
+      this.listActive = !this.listActive;
+      this.cerContent = '';
+      //That was done since when changing @Output in a child, @Output stops receiving changes
+      this.resetSelectedItems = Object.assign(false, this.resetSelectedItems);
     }
   }
 
-  ngOnInit() {}
+  public onDrop(): void {
+    this.listShow = true;
+    this.listActive = false;
+  }
+
+  public onSelectItem(item: StorageData) {
+    this.cerContent = item.content;
+  }
+
+  ngOnInit() {
+    if (this.localStorageService.isEmpty()) {
+      this.listShow = false;
+      this.dropShow = true;
+      this.viewShow = false;
+      this.addButtonActive = true;
+    }
+  }
 }

@@ -1,0 +1,4 @@
+<div class="view" [class.filled]="cerContent !== ''">
+  <p *ngIf="cerContent === ''">Выберите сертификат для просмотра информации</p>
+  <p *ngIf="cerContent !== ''" [innerHTML]="cerContent"></p>
+</div>
