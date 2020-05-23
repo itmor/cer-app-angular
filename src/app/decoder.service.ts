@@ -11,7 +11,7 @@ export class DecoderService {
     window.asnDecoder(
       file,
       (textResult: string) => this.parseFields(textResult, callback),
-      (err: string) => this.setErorMessage(err)
+      (err: string) => this.addErorMessage(err)
     );
   }
 
@@ -47,6 +47,9 @@ export class DecoderService {
       Valid from: ${this.dateConvert(validFrom)}<br/>
       Valid till: ${this.dateConvert(validTill)}`,
     });
+
+    // clear error layer
+    this.errMessage = '';
   }
 
   private removeQuotes(text: string): string {
@@ -70,9 +73,7 @@ export class DecoderService {
     return `${year}-${month}-${day}`;
   }
 
-  private setErorMessage(err: string) {
+  private addErorMessage(err: string) {
     this.errMessage += err;
-    console.log(this.errMessage);
-    // throw new Error('Бля');
   }
 }

@@ -8,7 +8,7 @@ export class LocalStorageService {
   private storageName: string = 'cerAngApp';
   private callbacksUpdates: Array<Function> = [];
 
-  public constructor() {
+  constructor() {
     this.create();
   }
 

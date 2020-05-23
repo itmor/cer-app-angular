@@ -22,7 +22,7 @@ export class ListComponent {
     }
   }
 
-  public activeHandler(itemData: StorageData) {
+  public activeHandler(itemData: StorageData): boolean {
     if (
       this.listActive === true &&
       itemData === this.selectedItemData &&
