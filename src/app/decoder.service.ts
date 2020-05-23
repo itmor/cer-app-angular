@@ -42,9 +42,9 @@ export class DecoderService {
     callback({
       id: Math.random().toString(36).substr(2, 5),
       name: this.removeQuotes(subjectCommonName),
-      content: `Common Name: ${this.removeQuotes(subjectCommonName)}
-      Issuer CN: ${this.removeQuotes(organizationCommonName)}
-      Valid from: ${this.dateConvert(validFrom)}
+      content: `Common Name: ${this.removeQuotes(subjectCommonName)}<br/>
+      Issuer CN: ${this.removeQuotes(organizationCommonName)}<br/>
+      Valid from: ${this.dateConvert(validFrom)}<br/>
       Valid till: ${this.dateConvert(validTill)}`,
     });
   }
