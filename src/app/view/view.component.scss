@@ -6,6 +6,10 @@
   font: 400 0.875rem Helvetica, Arial, sans-serif;
   color: #c0c0c0;
   border: 1px solid black;
+
+  p {
+    margin: 0 !important;
+  }
 }
 
 .view.filled {
