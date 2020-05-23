@@ -1,15 +1,25 @@
 <div class="wrap">
   <div class="block">
     <div class="left">
-      <list [listActive]="listActive"></list>
+      <list
+        *ngIf="listShow"
+        (onSelectItem)="onSelectItem($event)"
+        [listActive]="listActive"
+        [storageData]="storageData"
+        [resetSelectedItems]="resetSelectedItems"
+      ></list>
       <button
         class="btn-add"
         (click)="addButtonHandler()"
-        [ngClass]="statusButton ? 'active' : 'not-active'"
+        [ngClass]="addButtonActive ? 'active' : 'not-active'"
       >
-        {{ addButtonText }}
+        <span *ngIf="!addButtonActive">Добавить</span>
+        <span *ngIf="addButtonActive">Отменить</span>
       </button>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <drop *ngIf="dropShow" (onDrop)="onDrop()"></drop>
+      <view *ngIf="viewShow" [cerContent]="cerContent"></view>
+    </div>
   </div>
 </div>
