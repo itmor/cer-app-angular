@@ -42,18 +42,17 @@ export class AppComponent {
     }
   }
 
-  public onDrop(event: DragEvent): void {
-    this.decoderService.decode(
-      event.dataTransfer.files[0],
-
-      (storageData: StorageData) => {
+  public onDrop(files: Array<Blob>): void {
+    for (let file of files) {
+      this.decoderService.decode(file, (storageData: StorageData) => {
         this.localStorageService.addItem({
           name: storageData.name,
           id: storageData.id,
           content: storageData.content,
         });
-      }
-    );
+      });
+    }
+
     this.listShow = true;
     this.listActive = false;
   }
