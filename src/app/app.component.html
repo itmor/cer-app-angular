@@ -19,10 +19,7 @@
       </button>
     </div>
     <div class="right">
-      <drop
-        *ngIf="dropShow"
-        (onDrop)="onDrop($event.dataTransfer.files)"
-      ></drop>
+      <drop *ngIf="dropShow" (onDrop)="onDrop($event)"></drop>
       <view *ngIf="!dropShow" [cerContent]="cerContent"></view>
     </div>
   </div>

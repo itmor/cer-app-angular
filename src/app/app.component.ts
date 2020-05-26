@@ -42,16 +42,14 @@ export class AppComponent {
     }
   }
 
-  public onDrop(files: Array<Blob>): void {
-    for (let file of files) {
-      this.decoderService.decode(file, (storageData: StorageData) => {
-        this.localStorageService.addItem({
-          name: storageData.name,
-          id: storageData.id,
-          content: storageData.content,
-        });
+  public onDrop(file: Blob): void {
+    this.decoderService.decode(file, (storageData: StorageData) => {
+      this.localStorageService.addItem({
+        name: storageData.name,
+        id: storageData.id,
+        content: storageData.content,
       });
-    }
+    });
 
     this.listShow = true;
     this.listActive = false;
