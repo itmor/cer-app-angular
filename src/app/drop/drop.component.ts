@@ -10,11 +10,11 @@ import { StorageData } from '../interfaces/storageData.interface';
 })
 export class DropComponent {
   @Output() onDrop = new EventEmitter<boolean>();
-  private decoderService: DecoderService;
 
-  constructor(private localStorageService: LocalStorageService) {
-    this.decoderService = new DecoderService();
-  }
+  constructor(
+    private localStorageService: LocalStorageService,
+    private decoderService: DecoderService
+  ) {}
 
   public dragHandler(event: DragEvent): void {
     event.preventDefault();
