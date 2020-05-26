@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { StorageData } from './interfaces/storageData.interface';
+import { DecoderService } from './decoder.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,10 @@ export class AppComponent {
   public addButtonActive: boolean = false;
   public resetSelectedItems = false;
 
-  constructor(private localStorageService: LocalStorageService) {
+  constructor(
+    private localStorageService: LocalStorageService,
+    private decoderService: DecoderService
+  ) {
     this.storageData = this.localStorageService.getData();
     this.localStorageService.subscribeToUpdates(
       this.storageUpdateHandler.bind(this)
@@ -38,7 +42,18 @@ export class AppComponent {
     }
   }
 
-  public onDrop(): void {
+  public onDrop(event: DragEvent): void {
+    this.decoderService.decode(
+      event.dataTransfer.files[0],
+
+      (storageData: StorageData) => {
+        this.localStorageService.addItem({
+          name: storageData.name,
+          id: storageData.id,
+          content: storageData.content,
+        });
+      }
+    );
     this.listShow = true;
     this.listActive = false;
   }

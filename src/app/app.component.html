@@ -19,7 +19,7 @@
       </button>
     </div>
     <div class="right">
-      <drop *ngIf="dropShow" (onDrop)="onDrop()"></drop>
+      <drop *ngIf="dropShow" (onDrop)="onDrop($event)"></drop>
       <view *ngIf="!dropShow" [cerContent]="cerContent"></view>
     </div>
   </div>
