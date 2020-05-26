@@ -20,7 +20,7 @@
     </div>
     <div class="right">
       <drop *ngIf="dropShow" (onDrop)="onDrop()"></drop>
-      <view *ngIf="viewShow" [cerContent]="cerContent"></view>
+      <view *ngIf="!dropShow" [cerContent]="cerContent"></view>
     </div>
   </div>
 </div>

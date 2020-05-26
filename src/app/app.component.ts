@@ -11,7 +11,6 @@ export class AppComponent {
   public listShow: boolean = true;
   public listActive: boolean = true;
   public cerContent = '';
-  public viewShow: boolean = true;
   public dropShow: boolean = false;
   public storageData: Array<StorageData>;
   public addButtonActive: boolean = false;
@@ -32,7 +31,6 @@ export class AppComponent {
     if (!this.localStorageService.isEmpty()) {
       this.addButtonActive = !this.addButtonActive;
       this.dropShow = !this.dropShow;
-      this.viewShow = !this.viewShow;
       this.listActive = !this.listActive;
       this.cerContent = '';
       //That was done since when changing @Output in a child, @Output stops receiving changes
@@ -53,7 +51,6 @@ export class AppComponent {
     if (this.localStorageService.isEmpty()) {
       this.listShow = false;
       this.dropShow = true;
-      this.viewShow = false;
       this.addButtonActive = true;
     }
   }
