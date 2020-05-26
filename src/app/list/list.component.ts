@@ -7,27 +7,37 @@ import { StorageData } from '../interfaces/storageData.interface';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent {
-  @Input() listActive: boolean;
   @Input() storageData: Array<StorageData>;
-  @Input() resetSelectedItems: boolean;
-  @Output() onSelectItem = new EventEmitter<any>();
+  @Output() onSelectItem = new EventEmitter<StorageData>();
 
+  public listActive: boolean = true;
   public selectedItemData: StorageData;
 
   public clickHandler(itemData: StorageData): void {
     if (this.listActive === true) {
       this.selectedItemData = itemData;
       this.onSelectItem.emit(this.selectedItemData);
-      this.resetSelectedItems = false;
     }
   }
 
+  public getListActiveStatus(): boolean {
+    return this.listActive;
+  }
+
+  public setListActiveStatus(status: boolean): void {
+    this.listActive = status;
+  }
+
+  public resetSelectedItems(): void {
+    this.selectedItemData = {
+      name: '',
+      content: '',
+      id: '',
+    };
+  }
+
   public activeHandler(itemData: StorageData): boolean {
-    if (
-      this.listActive === true &&
-      itemData === this.selectedItemData &&
-      this.resetSelectedItems === false
-    ) {
+    if (this.listActive === true && itemData === this.selectedItemData) {
       return true;
     }
     return false;

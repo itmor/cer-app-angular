@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { StorageData } from './interfaces/storageData.interface';
 import { DecoderService } from './decoder.service';
+import { ListComponent } from './list/list.component';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +10,13 @@ import { DecoderService } from './decoder.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  @ViewChild(ListComponent) child: ListComponent;
+
   public listShow: boolean = true;
-  public listActive: boolean = true;
   public cerContent = '';
   public dropShow: boolean = false;
   public storageData: Array<StorageData>;
   public addButtonActive: boolean = false;
-  public resetSelectedItems = false;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -35,10 +36,10 @@ export class AppComponent {
     if (!this.localStorageService.isEmpty()) {
       this.addButtonActive = !this.addButtonActive;
       this.dropShow = !this.dropShow;
-      this.listActive = !this.listActive;
       this.cerContent = '';
       //That was done since when changing @Output in a child, @Output stops receiving changes
-      this.resetSelectedItems = Object.assign(false, this.resetSelectedItems);
+      this.child.setListActiveStatus(!this.child.getListActiveStatus());
+      this.child.resetSelectedItems();
     }
   }
 
@@ -52,7 +53,7 @@ export class AppComponent {
     });
 
     this.listShow = true;
-    this.listActive = false;
+    this.child.setListActiveStatus(false);
   }
 
   public onSelectItem(item: StorageData) {
