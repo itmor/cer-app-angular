@@ -37,7 +37,6 @@ export class AppComponent {
       this.addButtonActive = !this.addButtonActive;
       this.dropShow = !this.dropShow;
       this.cerContent = '';
-      //That was done since when changing @Output in a child, @Output stops receiving changes
       this.child.setListActiveStatus(!this.child.getListActiveStatus());
       this.child.resetSelectedItems();
     }

@@ -1,4 +1,13 @@
-<div class="view" [class.filled]="cerContent !== ''">
-  <p *ngIf="cerContent === ''">Выберите сертификат для просмотра информации</p>
-  <p *ngIf="cerContent !== ''" [innerHTML]="cerContent"></p>
+<div
+  class="cer-view__body"
+  [ngClass]="{ 'cer-view__body--filled': cerContent !== '' }"
+>
+  <p class="cer-view__content" *ngIf="cerContent === ''">
+    Выберите сертификат для просмотра информации
+  </p>
+  <p
+    class="cer-view__content"
+    *ngIf="cerContent !== ''"
+    [innerHTML]="cerContent"
+  ></p>
 </div>
