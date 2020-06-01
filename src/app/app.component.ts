@@ -10,7 +10,7 @@ import { ListComponent } from './list/list.component';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  @ViewChild(ListComponent) child: ListComponent;
+  @ViewChild(ListComponent) listComponent: ListComponent;
 
   public listShow: boolean = true;
   public cerContent = '';
@@ -37,10 +37,10 @@ export class AppComponent {
       this.addButtonActive = !this.addButtonActive;
       this.dropShow = !this.dropShow;
       this.cerContent = '';
-      this.child.setListPointerActiveStatus(
-        !this.child.getListPointerActiveStatus()
+      this.listComponent.setListPointerActiveStatus(
+        !this.listComponent.getListPointerActiveStatus()
       );
-      this.child.resetSelectedItems();
+      this.listComponent.resetSelectedItems();
     }
   }
 
@@ -54,7 +54,7 @@ export class AppComponent {
     });
 
     this.listShow = true;
-    this.child.setListPointerActiveStatus(false);
+    this.listComponent.setListPointerActiveStatus(false);
   }
 
   public onSelectItem(item: StorageData) {
