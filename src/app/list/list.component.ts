@@ -10,22 +10,22 @@ export class ListComponent {
   @Input() storageData: Array<StorageData>;
   @Output() onSelectItem = new EventEmitter<StorageData>();
 
-  public listActive: boolean = true;
+  public listPointerActive: boolean = true;
   public selectedItemData: StorageData;
 
   public clickHandler(itemData: StorageData): void {
-    if (this.listActive === true) {
+    if (this.listPointerActive === true) {
       this.selectedItemData = itemData;
       this.onSelectItem.emit(this.selectedItemData);
     }
   }
 
-  public getListActiveStatus(): boolean {
-    return this.listActive;
+  public getlistPointerActiveStatus(): boolean {
+    return this.listPointerActive;
   }
 
-  public setListActiveStatus(status: boolean): void {
-    this.listActive = status;
+  public setlistPointerActiveStatus(status: boolean): void {
+    this.listPointerActive = status;
   }
 
   public resetSelectedItems(): void {
@@ -37,7 +37,7 @@ export class ListComponent {
   }
 
   public activeHandler(itemData: StorageData): boolean {
-    if (this.listActive === true && itemData === this.selectedItemData) {
+    if (this.listPointerActive === true && itemData === this.selectedItemData) {
       return true;
     }
     return false;

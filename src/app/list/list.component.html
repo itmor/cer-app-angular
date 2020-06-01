@@ -1,4 +1,7 @@
-<div [ngClass]="{ 'cer-list': true, 'cer-list--active': listActive }">
+<div
+  class="cer-list__body"
+  [ngClass]="{ 'cer-list__body--pointer-active': listPointerActive }"
+>
   <div
     class="cer-list__item"
     *ngFor="let itemData of storageData"
