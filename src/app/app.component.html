@@ -6,11 +6,7 @@
         (onSelectItem)="onSelectItem($event)"
         [storageData]="storageData"
       ></list>
-      <button
-        class="cer-btn-add"
-        (click)="addButtonHandler()"
-        [ngClass]="addButtonActive ? 'active' : 'not-active'"
-      >
+      <button class="cer-btn-add" (click)="addButtonHandler()">
         <span *ngIf="!addButtonActive">Добавить</span>
         <span *ngIf="addButtonActive">Отменить</span>
       </button>
