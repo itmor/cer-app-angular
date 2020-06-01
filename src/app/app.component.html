@@ -1,20 +1,28 @@
-<div class="wrap wrap--column wrap--centered">
-  <div class="cer-block">
-    <div class="cer-block__left">
+<div class="app">
+  <div class="app__wrap">
+    <div class="app__left-block">
       <list
-        class="cer-list"
+        class="app__list"
         *ngIf="listShow"
         (onSelectItem)="onSelectItem($event)"
         [storageData]="storageData"
       ></list>
-      <button class="cer-btn-add" (click)="addButtonHandler()">
+      <button class="app__cer-btn-add" (click)="addButtonHandler()">
         <span *ngIf="!addButtonActive">Добавить</span>
         <span *ngIf="addButtonActive">Отменить</span>
       </button>
     </div>
-    <div class="cer-block__right">
-      <drop class="cer-drop" *ngIf="dropShow" (onDrop)="onDrop($event)"></drop>
-      <view class="cer-view" *ngIf="!dropShow" [cerContent]="cerContent"></view>
+    <div class="app__left-block">
+      <drop
+        class="app__cer-drop"
+        *ngIf="dropShow"
+        (onDrop)="onDrop($event)"
+      ></drop>
+      <view
+        class="app__cer-view"
+        *ngIf="!dropShow"
+        [cerContent]="cerContent"
+      ></view>
     </div>
   </div>
 </div>

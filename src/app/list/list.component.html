@@ -1,15 +1,17 @@
-<div
-  class="cer-list__body"
-  [ngClass]="{ 'cer-list__body--pointer-active': listPointerActive }"
->
+<div class="cer-list">
   <div
-    class="cer-list__item"
-    *ngFor="let itemData of storageData"
-    [id]="itemData.id"
-    (click)="clickHandler(itemData)"
-    [ngClass]="{ 'cer-list__item--active': activeHandler(itemData) }"
+    class="cer-list__body"
+    [ngClass]="{ 'cer-list__body--pointer-active': listPointerActive }"
   >
-    <span class="cer-list__text">{{ itemData.name }}</span>
-    <span class="cer-list__icon">▶</span>
+    <div
+      class="cer-list__item"
+      *ngFor="let itemData of storageData"
+      [id]="itemData.id"
+      (click)="clickHandler(itemData)"
+      [ngClass]="{ 'cer-list__item--active': activeHandler(itemData) }"
+    >
+      <span class="cer-list__text">{{ itemData.name }}</span>
+      <span class="cer-list__icon">▶</span>
+    </div>
   </div>
 </div>
