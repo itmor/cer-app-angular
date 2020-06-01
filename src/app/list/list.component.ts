@@ -20,11 +20,11 @@ export class ListComponent {
     }
   }
 
-  public getlistPointerActiveStatus(): boolean {
+  public getListPointerActiveStatus(): boolean {
     return this.listPointerActive;
   }
 
-  public setlistPointerActiveStatus(status: boolean): void {
+  public setListPointerActiveStatus(status: boolean): void {
     this.listPointerActive = status;
   }
 

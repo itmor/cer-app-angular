@@ -37,8 +37,8 @@ export class AppComponent {
       this.addButtonActive = !this.addButtonActive;
       this.dropShow = !this.dropShow;
       this.cerContent = '';
-      this.child.setlistPointerActiveStatus(
-        !this.child.getlistPointerActiveStatus()
+      this.child.setListPointerActiveStatus(
+        !this.child.getListPointerActiveStatus()
       );
       this.child.resetSelectedItems();
     }
@@ -54,7 +54,7 @@ export class AppComponent {
     });
 
     this.listShow = true;
-    this.child.setlistPointerActiveStatus(false);
+    this.child.setListPointerActiveStatus(false);
   }
 
   public onSelectItem(item: StorageData) {
