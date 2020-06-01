@@ -1,38 +1,40 @@
-.cer-list__body {
-  border: 1px solid black;
-  margin-bottom: 40px;
-}
+.cer-list {
+  .cer-list__body {
+    border: 1px solid black;
+    margin-bottom: 40px;
 
-.cer-list__body--pointer-active {
-  .cer-list__item {
-    cursor: pointer;
+    .cer-list__item {
+      display: flex;
+      border-bottom: 1px solid black;
+      padding: 7px;
+      align-items: center;
+
+      .cer-list__text {
+        font: 400 0.875rem Helvetica, Arial, sans-serif;
+      }
+
+      .cer-list__icon {
+        visibility: hidden;
+        display: flex;
+        margin: 0 0 0 auto;
+        padding-left: 30px;
+        font-size: 0.8rem;
+        color: #444444;
+      }
+
+      &:last-child {
+        border: none;
+      }
+    }
+
+    .cer-list__item--active {
+      background-color: #e6e6e6;
+    }
   }
-}
 
-.cer-list__item {
-  display: flex;
-  border-bottom: 1px solid black;
-  padding: 7px;
-  align-items: center;
-
-  &:last-child {
-    border: none;
+  .cer-list__body--pointer-active {
+    .cer-list__item {
+      cursor: pointer;
+    }
   }
-}
-
-.cer-list__item--active {
-  background-color: #e6e6e6;
-}
-
-.cer-list__text {
-  font: 400 0.875rem Helvetica, Arial, sans-serif;
-}
-
-.cer-list__icon {
-  visibility: hidden;
-  display: flex;
-  margin: 0 0 0 auto;
-  padding-left: 30px;
-  font-size: 0.8rem;
-  color: #444444;
 }
