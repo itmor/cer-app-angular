@@ -30,7 +30,8 @@
               "src/vendor/int10.js",
               "src/vendor/oids.js",
               "src/vendor/hex.js",
-              "src/vendor/asn1.js"
+              "src/vendor/asn1.js",
+              "src/vendor/asn1-decoder.js"
             ]
           },
           "configurations": {
