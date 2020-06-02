@@ -3,6 +3,7 @@ import { LocalStorageService } from './local-storage.service';
 import { StorageData } from './interfaces/storageData.interface';
 import { DecoderService } from './decoder.service';
 import { ListComponent } from './list/list.component';
+import { DecoderData } from './interfaces/decoderData.interface';
 
 @Component({
   selector: 'app-root',
@@ -38,24 +39,31 @@ export class AppComponent {
   }
 
   public onDrop(file: Blob): void {
-    this.decoderService.decode(
-      file,
-      (fields: any) => {
-        this.localStorageService.addItem({
-          name: fields.issuerCN,
-          id: Math.random().toString(36).substr(2, 5),
-          content: `
-          Common Name: ${fields.commonName}<br/>
-          Issuer CN: ${fields.issuerCN}<br/>
-          Valid from: ${fields.validFrom}<br/>
-          Valid till: ${fields.validTill}
-          `,
-        });
-      },
-      (err: string) => {
-        console.log(err);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (reader.error) {
+        throw new Error(`Your browser couldn't read the specified file (error code ${reader.error.code}`);
+      } else {
+        try {
+          const decoderData: DecoderData = this.decoderService.decode(<string>reader.result);
+
+          this.localStorageService.addItem({
+            name: decoderData.issuerCN,
+            id: Math.random().toString(36).substr(2, 5),
+            content: `
+            Common Name: ${decoderData.commonName}<br/>
+            Issuer CN: ${decoderData.issuerCN}<br/>
+            Valid from: ${decoderData.validFrom}<br/>
+            Valid till: ${decoderData.validTill}
+            `,
+          });
+        } catch (e) {
+          console.error(e);
+        }
       }
-    );
+    };
+
+    reader.readAsBinaryString(file);
 
     this.listShow = true;
     this.listComponent.setListPointerActiveStatus(false);

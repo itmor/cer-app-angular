@@ -1,47 +1,36 @@
 import { Injectable } from '@angular/core';
 import ASN1 from '@lapo/asn1js';
+import { DecoderData } from './interfaces/decoderData.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DecoderService {
-  public decode(file: Blob, callback: Function, errCallback: Function): void {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      if (reader.error) {
-        errCallback(`Your browser couldn't read the specified file (error code ${reader.error.code}`);
-      } else {
-        this.getAsn(<string>reader.result, callback, errCallback);
-      }
-    };
-    reader.readAsBinaryString(file);
-  }
-
-  private getAsn(der: string, callback: Function, errCallback: Function): void {
+  public decode(binaryString: string): DecoderData {
     try {
-      const asnStruct: any = ASN1.decode(der);
+      const asnStruct: any = ASN1.decode(binaryString);
       if (asnStruct.typeName() !== 'SEQUENCE' && asnStruct.sub === null) {
-        errCallback('Неверная структура конверта сертификата (ожидается SEQUENCE)');
+        throw new Error('Неверная структура конверта сертификата (ожидается SEQUENCE)');
       } else {
-        this.parseFields(asnStruct.sub[0], callback);
+        return this.parseFields(asnStruct.sub[0]);
       }
     } catch (e) {
-      errCallback(e);
+      throw e;
     }
   }
 
-  private parseFields(asnStruct: any, callback: Function): void {
+  private parseFields(asnStruct: any): DecoderData {
     const commonName: string = this.getContentInSet(asnStruct.sub[3].sub, 'commonName');
     const issuerCN: string = this.getContentInSet(asnStruct.sub[5].sub, 'commonName');
     const validFrom: string = asnStruct.sub[4].sub[0].content().split(' ')[0];
     const validTill: string = asnStruct.sub[4].sub[1].content().split(' ')[0];
 
-    callback({
+    return {
       commonName: commonName,
       issuerCN: issuerCN,
       validFrom: validFrom,
       validTill: validTill,
-    });
+    };
   }
 
   private getContentInSet(subs: Array<any>, desiredField: string): string {
