@@ -47,9 +47,7 @@ export class AppComponent {
   public onDrop(file: Blob): void {
     this.decoderService.decode(
       file,
-      (res) => {
-        console.log(res);
-      },
+      (storageData: StorageData) => {},
       (err: string) => {
         console.log(err);
       }

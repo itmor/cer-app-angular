@@ -11,7 +11,8 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es3",
-    "lib": ["es2018", "dom"]
+    "lib": ["es2018", "dom"],
+    "noImplicitAny": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
