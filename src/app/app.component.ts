@@ -45,14 +45,20 @@ export class AppComponent {
   }
 
   public onDrop(file: Blob): void {
-    this.decoderService.decode(file, (storageData: StorageData) => {
-      this.localStorageService.addItem({
-        name: storageData.name,
-        id: storageData.id,
-        content: storageData.content,
-      });
-    });
-
+    this.decoderService.decode(
+      file,
+      (res) => {
+        console.log(res);
+      },
+      (err: string) => {
+        console.log(err);
+      }
+    );
+    // this.localStorageService.addItem({
+    //   name: storageData.name,
+    //   id: storageData.id,
+    //   content: storageData.content,
+    // });
     this.listShow = true;
     this.listComponent.setListPointerActiveStatus(false);
   }

@@ -41,7 +41,7 @@
       if (reader.error) {
         errCallback(`Your browser couldn't read the specified file (error code ${reader.error.code}.`)
       } else {
-        decodeBinaryString(reader.result, callBack, errCallback);
+        decodeBinaryString(reader.result, callback, errCallback);
       }
     };
 
