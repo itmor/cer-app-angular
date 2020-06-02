@@ -18,14 +18,9 @@ export class AppComponent {
   public storageData: Array<StorageData>;
   public addButtonActive: boolean = false;
 
-  constructor(
-    private localStorageService: LocalStorageService,
-    private decoderService: DecoderService
-  ) {
+  constructor(private localStorageService: LocalStorageService, private decoderService: DecoderService) {
     this.storageData = this.localStorageService.getData();
-    this.localStorageService.subscribeToUpdates(
-      this.storageUpdateHandler.bind(this)
-    );
+    this.localStorageService.subscribeToUpdates(this.storageUpdateHandler.bind(this));
   }
 
   private storageUpdateHandler(updatedData: Array<StorageData>) {
@@ -37,9 +32,7 @@ export class AppComponent {
       this.addButtonActive = !this.addButtonActive;
       this.dropShow = !this.dropShow;
       this.cerContent = '';
-      this.listComponent.setListPointerActiveStatus(
-        !this.listComponent.getListPointerActiveStatus()
-      );
+      this.listComponent.setListPointerActiveStatus(!this.listComponent.getListPointerActiveStatus());
       this.listComponent.resetSelectedItems();
     }
   }
@@ -47,16 +40,23 @@ export class AppComponent {
   public onDrop(file: Blob): void {
     this.decoderService.decode(
       file,
-      (storageData: StorageData) => {},
+      (fields: any) => {
+        this.localStorageService.addItem({
+          name: fields.issuerCN,
+          id: Math.random().toString(36).substr(2, 5),
+          content: `
+          Common Name: ${fields.commonName}<br/>
+          Issuer CN: ${fields.issuerCN}<br/>
+          Valid from: ${fields.validFrom}<br/>
+          Valid till: ${fields.validTill}
+          `,
+        });
+      },
       (err: string) => {
         console.log(err);
       }
     );
-    // this.localStorageService.addItem({
-    //   name: storageData.name,
-    //   id: storageData.id,
-    //   content: storageData.content,
-    // });
+
     this.listShow = true;
     this.listComponent.setListPointerActiveStatus(false);
   }
