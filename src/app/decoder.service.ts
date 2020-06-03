@@ -7,15 +7,11 @@ import { DecoderData } from './interfaces/decoderData.interface';
 })
 export class DecoderService {
   public decode(binaryString: string): DecoderData {
-    try {
-      const asnStruct: any = ASN1.decode(binaryString);
-      if (asnStruct.typeName() !== 'SEQUENCE' && asnStruct.sub === null) {
-        throw new Error('Неверная структура конверта сертификата (ожидается SEQUENCE)');
-      } else {
-        return this.parseFields(asnStruct.sub[0]);
-      }
-    } catch (e) {
-      throw e;
+    const asnStruct: any = ASN1.decode(binaryString);
+    if (asnStruct.typeName() !== 'SEQUENCE' && asnStruct.sub === null) {
+      throw new Error('Неверная структура конверта сертификата (ожидается SEQUENCE)');
+    } else {
+      return this.parseFields(asnStruct.sub[0]);
     }
   }
 
